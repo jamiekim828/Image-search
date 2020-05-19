@@ -1,6 +1,7 @@
 import React from 'react';
-import axios from 'axios';
+import unsplash from '../api/unsplash';
 import SearchBar from './SearchBar';
+import ImageList from './ImageList';
 
 // unsplash API ( unsplash.com/developers )
 // https://api.unsplash.com/
@@ -13,12 +14,14 @@ class App extends React.Component {
   // later on we can use map function with array
 
   onSearchSubmit = async (term) => {
-    const response = await axios.get('https://api.unsplash.com/search/photos', {
+    const response = await unsplash.get('/search/photos', {
       params: { query: term },
-      headers: {
-        Authorization: 'Client-ID RwmHXGt72v7lqBPyHRnAAu-ix4B4lSbBq3b1NubFtyQ',
-      },
     });
+    // moved header to unsplash.js file
+    // and import unsplash
+    // remove axios and change to unsplash
+    // so you don't have to import axios in this file any more
+
     //   .then((response) => {
     //     console.log(response.data.results);
     //   })
@@ -36,6 +39,7 @@ class App extends React.Component {
           guessWhatIam='I am props object'
         />
         Found: {this.state.images.length} images
+        <ImageList images={this.state.images} />
       </div>
     );
   }
